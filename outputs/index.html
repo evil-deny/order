@@ -19,7 +19,6 @@
     .brand{display:flex;align-items:center;gap:10px;min-width:0}
     .brand img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#fff}
     .brand strong{display:block;font-size:22px;line-height:1.1}.brand span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
-    .top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
     .admin-open,.secondary{min-height:42px;padding:0 14px;background:#e8eef5;color:#243244}
     .wrap{max-width:1120px;margin:0 auto;padding:14px 12px 116px}
     .box,.category,.custom-panel{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
@@ -67,15 +66,28 @@
       .print-table th,.print-table td{border:1px solid #333;padding:8px;text-align:left}
       .print-table th{background:#eee}
       .print-table td:nth-child(2),.print-table td:nth-child(3),.print-table td:nth-child(4),.print-table th:nth-child(2),.print-table th:nth-child(3),.print-table th:nth-child(4){text-align:right}
-      .print-total{font-size:20px;font-weight:bold;text-align:right;margin-top:12px}
+      .print-total{font-size:24px;font-weight:bold;text-align:right;margin-top:14px;padding:10px;border:2px solid #111}
     }
-    @media(max-width:760px){.topbar{padding:12px;align-items:flex-start}.brand img{width:48px;height:48px}.brand strong{font-size:19px}.top-actions{display:grid;grid-template-columns:1fr;min-width:92px}.top-actions button{width:100%;padding:0 8px}.wrap{padding-bottom:126px}.customer-box,.search-row,.items,.bottom-inner,.metrics,.inventory-row,.custom-grid{grid-template-columns:1fr}.search-row{top:65px}.main-tabs{grid-template-columns:1fr}.item{grid-template-columns:76px minmax(0,1fr);padding:9px}.item img{width:76px;height:76px}.item h3{font-size:16px}.qty{grid-template-columns:40px minmax(46px,1fr) 40px}.qty button{width:40px;height:40px}.checkout{width:100%}.admin-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.modal-body{padding:12px}.line{grid-template-columns:1fr}.line-actions{justify-content:flex-start}.return-line{grid-template-columns:24px minmax(0,1fr)}}
+    .receipt-card{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+    .receipt-title{padding:16px;background:#eef5f5;text-align:center}
+    .receipt-title h3{margin:0;font-size:24px}
+    .receipt-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:14px;border-bottom:1px solid var(--line)}
+    .receipt-info div{padding:9px 10px;background:#f8fafc;border-radius:8px}
+    .receipt-table{width:100%;border-collapse:collapse}
+    .receipt-table th,.receipt-table td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    .receipt-table th{background:#f8fafc;color:var(--muted);font-size:13px}
+    .receipt-table td:nth-child(2),.receipt-table td:nth-child(3),.receipt-table td:nth-child(4),.receipt-table th:nth-child(2),.receipt-table th:nth-child(3),.receipt-table th:nth-child(4){text-align:right;white-space:nowrap}
+    .receipt-edit{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+    .receipt-edit button{width:34px;height:34px;background:#e2e8f0}
+    .receipt-edit .remove{width:auto;padding:0 10px;background:#fee2e2;color:#991b1b}
+    .receipt-total-row{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:14px;padding:14px 16px;font-size:24px;font-weight:900;background:#fff7ed;border:2px solid #f59e0b;border-radius:10px;color:#9a3412}
+    @media(max-width:760px){.topbar{padding:12px;align-items:flex-start}.brand img{width:48px;height:48px}.brand strong{font-size:19px}.wrap{padding-bottom:126px}.customer-box,.search-row,.items,.bottom-inner,.metrics,.inventory-row,.custom-grid,.receipt-info{grid-template-columns:1fr}.search-row{top:65px}.main-tabs{grid-template-columns:1fr}.item{grid-template-columns:76px minmax(0,1fr);padding:9px}.item img{width:76px;height:76px}.item h3{font-size:16px}.qty{grid-template-columns:40px minmax(46px,1fr) 40px}.qty button{width:40px;height:40px}.checkout{width:100%}.admin-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.modal-body{padding:12px}.line{grid-template-columns:1fr}.line-actions{justify-content:flex-start}.return-line{grid-template-columns:24px minmax(0,1fr)}.receipt-table th:nth-child(2),.receipt-table td:nth-child(2){display:none}.receipt-table th,.receipt-table td{padding:9px 8px}}
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><img src="assets/logo.jpg" alt="福緣素食 logo"><div><strong>福緣訂單系統</strong><span>輸入大名，選品項，確認後送出</span></div></div>
-    <div class="top-actions"><button class="secondary" id="openExternal">瀏覽器開啟</button><button class="admin-open" id="openAdmin">後台</button></div>
+    <button class="admin-open" id="openAdmin">後台</button>
   </header>
 
   <main class="wrap">
@@ -216,11 +228,19 @@
       const total=pendingOrder.items.reduce((sum,i)=>sum+itemSubtotal(i),0);
       document.getElementById("receiptContent").innerHTML=`
         <div class="screen-receipt">
-          <p><strong>大名：</strong>${pendingOrder.name}</p>
-          <p><strong>開單時間：</strong>${pendingOrder.createdAt}</p>
-          ${pendingOrder.note?`<p><strong>備註：</strong>${pendingOrder.note}</p>`:""}
-          <div class="receipt-list">${pendingOrder.items.map((item,index)=>`<div class="line"><span>${itemName(item)}<br><small>單價 ${money(itemPrice(item))} × ${item.qty} = ${money(itemSubtotal(item))}</small></span><span class="line-actions"><button data-receipt-dec="${index}">−</button><button data-receipt-inc="${index}">＋</button><button class="remove" data-receipt-remove="${index}">刪除</button></span></div>`).join("") || `<div class="empty">訂單已沒有品項。</div>`}</div>
-          <div class="line"><strong>總計</strong><strong>${money(total)}</strong></div>
+          <div class="receipt-card">
+            <div class="receipt-title"><h3>福緣訂單明細</h3></div>
+            <div class="receipt-info">
+              <div><strong>大名</strong><br>${pendingOrder.name}</div>
+              <div><strong>開單時間</strong><br>${pendingOrder.createdAt}</div>
+              ${pendingOrder.note?`<div style="grid-column:1/-1"><strong>備註</strong><br>${pendingOrder.note}</div>`:""}
+            </div>
+            <table class="receipt-table">
+              <thead><tr><th>商品</th><th>單價</th><th>數量</th><th>小計</th></tr></thead>
+              <tbody>${pendingOrder.items.map((item,index)=>`<tr><td><strong>${itemName(item)}</strong><div class="receipt-edit"><button data-receipt-dec="${index}">−</button><button data-receipt-inc="${index}">＋</button><button class="remove" data-receipt-remove="${index}">刪除</button></div></td><td>${money(itemPrice(item))}</td><td>${item.qty}</td><td>${money(itemSubtotal(item))}</td></tr>`).join("") || `<tr><td colspan="4">訂單已沒有品項。</td></tr>`}</tbody>
+            </table>
+            <div class="receipt-total-row"><span>總金額</span><strong>${money(total)}</strong></div>
+          </div>
         </div>
         <div class="print-receipt" style="display:none">
           <h1 style="text-align:center;margin:0 0 10px">福緣訂單明細</h1>
@@ -231,7 +251,7 @@
             <thead><tr><th>商品</th><th>單價</th><th>數量</th><th>總額</th></tr></thead>
             <tbody>${pendingOrder.items.map(item=>`<tr><td>${itemName(item)}</td><td>${money(itemPrice(item))}</td><td>${item.qty}</td><td>${money(itemSubtotal(item))}</td></tr>`).join("")}</tbody>
           </table>
-          <div class="print-total">總計：${money(total)}</div>
+          <div class="print-total">總金額：${money(total)}</div>
         </div>`;
     }
     function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight){
@@ -316,7 +336,12 @@
       });
       ctx.font='bold 32px "Microsoft JhengHei", sans-serif';
       ctx.textAlign="right";
-      ctx.fillText(`總計：${money(total)}`,width-padding,y+28);
+      ctx.fillStyle="#fff7ed";
+      ctx.fillRect(padding,y+18,width-padding*2,64);
+      ctx.strokeStyle="#f59e0b";
+      ctx.strokeRect(padding,y+18,width-padding*2,64);
+      ctx.fillStyle="#9a3412";
+      ctx.fillText(`總金額：${money(total)}`,width-padding-18,y+34);
       return canvas;
     }
     async function shareReceiptImage(){
@@ -341,16 +366,6 @@
         }
       }catch(error){
         alert("圖片分享未完成，可以留在此頁繼續送出訂單。");
-      }
-    }
-    async function openExternalBrowser(){
-      const url=location.href;
-      try{
-        window.open(url,"_blank","noopener,noreferrer");
-        if(navigator.clipboard) await navigator.clipboard.writeText(url);
-        alert("已嘗試開啟新瀏覽器分頁，並複製網址。若仍在 LINE 內建瀏覽器，請用右上角選單選「在瀏覽器開啟」。");
-      }catch(error){
-        alert(`請複製網址後用瀏覽器開啟：${url}`);
       }
     }
     function syncPendingToPage(){
@@ -439,7 +454,6 @@
       if(pick){ const o=state.orders.find(x=>x.id===pick.dataset.pick); const i=o.items.find(x=>x.id===pick.dataset.product); i.picked=pick.checked; o.status=o.items.some(x=>x.picked)?"picking":"new"; saveState(); renderAdmin(); renderShipping(); }
     });
     document.getElementById("categoryFilter").addEventListener("change",renderProducts);
-    document.getElementById("openExternal").addEventListener("click",openExternalBrowser);
     document.getElementById("addCustom").addEventListener("click",()=>{
       const name=document.getElementById("customName").value.trim();
       const price=Number(document.getElementById("customPrice").value||0);
