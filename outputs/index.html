@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>福緣訂單系統</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
       --bg:#f5f7fa; --card:#fff; --ink:#1f2937; --muted:#64748b; --line:#d8e0ea;
@@ -20,6 +19,7 @@
     .brand{display:flex;align-items:center;gap:10px;min-width:0}
     .brand img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#fff}
     .brand strong{display:block;font-size:22px;line-height:1.1}.brand span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+    .top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
     .admin-open,.secondary{min-height:42px;padding:0 14px;background:#e8eef5;color:#243244}
     .wrap{max-width:1120px;margin:0 auto;padding:14px 12px 116px}
     .box,.category,.custom-panel{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
@@ -53,14 +53,6 @@
     .check{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:8px;background:#f8fafc}.check input{width:20px;min-height:20px;accent-color:var(--main)}
     .return-grid{display:grid;gap:8px}.return-line{display:grid;grid-template-columns:24px minmax(0,1fr) 90px;gap:8px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:8px;background:#f8fafc}.return-line input[type=checkbox]{width:20px;min-height:20px}.inventory-row{grid-template-columns:minmax(0,1.4fr) 110px 110px 140px 180px;align-items:center}.stock-controls{display:grid;grid-template-columns:42px minmax(55px,1fr) 42px;gap:6px}.stock-controls button{width:42px;height:42px;background:#e2e8f0}.stock-controls input{text-align:center;font-weight:900;padding:4px}
     .empty{padding:24px;color:var(--muted);text-align:center;border:1px dashed var(--line);border-radius:10px;background:#f8fafc}
-    .share-card{width:720px;padding:28px;background:#fff;color:#111;font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif}
-    .share-card h1{text-align:center;margin:0 0 16px;font-size:30px}
-    .share-card p{margin:8px 0;font-size:18px}
-    .share-card table{width:100%;border-collapse:collapse;margin-top:16px;font-size:18px}
-    .share-card th,.share-card td{border:1px solid #333;padding:10px;text-align:left}
-    .share-card th{background:#eee}
-    .share-card td:nth-child(2),.share-card td:nth-child(3),.share-card td:nth-child(4),.share-card th:nth-child(2),.share-card th:nth-child(3),.share-card th:nth-child(4){text-align:right}
-    .share-card .share-total{text-align:right;font-size:24px;font-weight:900;margin-top:14px}
     @media print{
       body{background:#fff}
       .topbar,.wrap,.bottom-bar,.modal:not(#receiptModal),#receiptModal .modal-head,#receiptModal .actions{display:none!important}
@@ -77,13 +69,13 @@
       .print-table td:nth-child(2),.print-table td:nth-child(3),.print-table td:nth-child(4),.print-table th:nth-child(2),.print-table th:nth-child(3),.print-table th:nth-child(4){text-align:right}
       .print-total{font-size:20px;font-weight:bold;text-align:right;margin-top:12px}
     }
-    @media(max-width:760px){.topbar{padding:12px}.brand img{width:48px;height:48px}.brand strong{font-size:19px}.wrap{padding-bottom:126px}.customer-box,.search-row,.items,.bottom-inner,.metrics,.inventory-row,.custom-grid{grid-template-columns:1fr}.search-row{top:65px}.main-tabs{grid-template-columns:1fr}.item{grid-template-columns:76px minmax(0,1fr);padding:9px}.item img{width:76px;height:76px}.item h3{font-size:16px}.qty{grid-template-columns:40px minmax(46px,1fr) 40px}.qty button{width:40px;height:40px}.checkout{width:100%}.admin-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.modal-body{padding:12px}.line{grid-template-columns:1fr}.line-actions{justify-content:flex-start}.return-line{grid-template-columns:24px minmax(0,1fr)}}
+    @media(max-width:760px){.topbar{padding:12px;align-items:flex-start}.brand img{width:48px;height:48px}.brand strong{font-size:19px}.top-actions{display:grid;grid-template-columns:1fr;min-width:92px}.top-actions button{width:100%;padding:0 8px}.wrap{padding-bottom:126px}.customer-box,.search-row,.items,.bottom-inner,.metrics,.inventory-row,.custom-grid{grid-template-columns:1fr}.search-row{top:65px}.main-tabs{grid-template-columns:1fr}.item{grid-template-columns:76px minmax(0,1fr);padding:9px}.item img{width:76px;height:76px}.item h3{font-size:16px}.qty{grid-template-columns:40px minmax(46px,1fr) 40px}.qty button{width:40px;height:40px}.checkout{width:100%}.admin-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.modal-body{padding:12px}.line{grid-template-columns:1fr}.line-actions{justify-content:flex-start}.return-line{grid-template-columns:24px minmax(0,1fr)}}
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><img src="assets/logo.jpg" alt="福緣素食 logo"><div><strong>福緣訂單系統</strong><span>輸入大名，選品項，確認後送出</span></div></div>
-    <button class="admin-open" id="openAdmin">後台</button>
+    <div class="top-actions"><button class="secondary" id="openExternal">瀏覽器開啟</button><button class="admin-open" id="openAdmin">後台</button></div>
   </header>
 
   <main class="wrap">
@@ -217,20 +209,23 @@
     }
 
     function renderReceipt(){
-      pendingOrder = { name:document.getElementById("customerName").value.trim(), note:document.getElementById("customerNote").value.trim(), items:cartItems() };
+      pendingOrder = { name:document.getElementById("customerName").value.trim(), note:document.getElementById("customerNote").value.trim(), items:cartItems(), createdAt:nowText(), createdAtISO:new Date().toISOString() };
       drawReceipt();
     }
     function drawReceipt(){
       const total=pendingOrder.items.reduce((sum,i)=>sum+itemSubtotal(i),0);
       document.getElementById("receiptContent").innerHTML=`
         <div class="screen-receipt">
-          <p><strong>大名：</strong>${pendingOrder.name}</p>${pendingOrder.note?`<p><strong>備註：</strong>${pendingOrder.note}</p>`:""}
+          <p><strong>大名：</strong>${pendingOrder.name}</p>
+          <p><strong>開單時間：</strong>${pendingOrder.createdAt}</p>
+          ${pendingOrder.note?`<p><strong>備註：</strong>${pendingOrder.note}</p>`:""}
           <div class="receipt-list">${pendingOrder.items.map((item,index)=>`<div class="line"><span>${itemName(item)}<br><small>單價 ${money(itemPrice(item))} × ${item.qty} = ${money(itemSubtotal(item))}</small></span><span class="line-actions"><button data-receipt-dec="${index}">−</button><button data-receipt-inc="${index}">＋</button><button class="remove" data-receipt-remove="${index}">刪除</button></span></div>`).join("") || `<div class="empty">訂單已沒有品項。</div>`}</div>
           <div class="line"><strong>總計</strong><strong>${money(total)}</strong></div>
         </div>
         <div class="print-receipt" style="display:none">
           <h1 style="text-align:center;margin:0 0 10px">福緣訂單明細</h1>
           <p><strong>大名：</strong>${pendingOrder.name}</p>
+          <p><strong>開單時間：</strong>${pendingOrder.createdAt}</p>
           ${pendingOrder.note?`<p><strong>備註：</strong>${pendingOrder.note}</p>`:""}
           <table class="print-table">
             <thead><tr><th>商品</th><th>單價</th><th>數量</th><th>總額</th></tr></thead>
@@ -239,37 +234,98 @@
           <div class="print-total">總計：${money(total)}</div>
         </div>`;
     }
-    function buildShareCard(){
+    function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight){
+      const words=String(text).split("");
+      let line="";
+      const lines=[];
+      words.forEach(ch=>{
+        const test=line+ch;
+        if(ctx.measureText(test).width>maxWidth && line){
+          lines.push(line);
+          line=ch;
+        }else{
+          line=test;
+        }
+      });
+      lines.push(line);
+      lines.forEach((part,index)=>ctx.fillText(part,x,y+index*lineHeight));
+      return Math.max(1,lines.length)*lineHeight;
+    }
+    function drawShareCanvas(){
+      const rows=pendingOrder.items.map(item=>({
+        name:itemName(item),
+        price:money(itemPrice(item)),
+        qty:String(item.qty),
+        subtotal:money(itemSubtotal(item))
+      }));
       const total=pendingOrder.items.reduce((sum,i)=>sum+itemSubtotal(i),0);
-      const card=document.createElement("div");
-      card.className="share-card";
-      card.style.position="fixed";
-      card.style.left="-9999px";
-      card.style.top="0";
-      card.innerHTML=`
-        <h1>福緣訂單明細</h1>
-        <p><strong>大名：</strong>${pendingOrder.name}</p>
-        ${pendingOrder.note?`<p><strong>備註：</strong>${pendingOrder.note}</p>`:""}
-        <table>
-          <thead><tr><th>商品</th><th>單價</th><th>數量</th><th>總額</th></tr></thead>
-          <tbody>${pendingOrder.items.map(item=>`<tr><td>${itemName(item)}</td><td>${money(itemPrice(item))}</td><td>${item.qty}</td><td>${money(itemSubtotal(item))}</td></tr>`).join("")}</tbody>
-        </table>
-        <div class="share-total">總計：${money(total)}</div>`;
-      document.body.appendChild(card);
-      return card;
+      const width=1000;
+      const padding=40;
+      const nameWidth=430;
+      const lineHeight=30;
+      const rowHeights=rows.map(row=>{
+        const probe=document.createElement("canvas").getContext("2d");
+        probe.font='26px "Microsoft JhengHei", sans-serif';
+        const textWidth=probe.measureText(row.name).width;
+        return Math.max(50,Math.ceil(textWidth/nameWidth)*lineHeight+18);
+      });
+      const height=230+rowHeights.reduce((a,b)=>a+b,0)+90;
+      const canvas=document.createElement("canvas");
+      canvas.width=width;
+      canvas.height=height;
+      const ctx=canvas.getContext("2d");
+      ctx.fillStyle="#ffffff";
+      ctx.fillRect(0,0,width,height);
+      ctx.fillStyle="#111111";
+      ctx.textBaseline="top";
+      ctx.font='bold 42px "Microsoft JhengHei", sans-serif';
+      ctx.textAlign="center";
+      ctx.fillText("福緣訂單明細",width/2,28);
+      ctx.textAlign="left";
+      ctx.font='26px "Microsoft JhengHei", sans-serif';
+      ctx.fillText(`大名：${pendingOrder.name}`,padding,94);
+      ctx.fillText(`開單時間：${pendingOrder.createdAt}`,padding,132);
+      if(pendingOrder.note) ctx.fillText(`備註：${pendingOrder.note}`,padding,170);
+      const tableTop=pendingOrder.note?214:180;
+      const cols=[padding,padding+500,padding+660,padding+780,width-padding];
+      ctx.strokeStyle="#333333";
+      ctx.lineWidth=2;
+      ctx.font='bold 26px "Microsoft JhengHei", sans-serif';
+      ctx.fillStyle="#eeeeee";
+      ctx.fillRect(padding,tableTop,width-padding*2,48);
+      ctx.fillStyle="#111111";
+      ctx.fillText("商品",cols[0]+12,tableTop+10);
+      ctx.textAlign="right";
+      ctx.fillText("單價",cols[2]-12,tableTop+10);
+      ctx.fillText("數量",cols[3]-12,tableTop+10);
+      ctx.fillText("總額",cols[4]-12,tableTop+10);
+      ctx.textAlign="left";
+      let y=tableTop+48;
+      ctx.font='26px "Microsoft JhengHei", sans-serif';
+      rows.forEach((row,index)=>{
+        const h=rowHeights[index];
+        ctx.strokeRect(padding,y,width-padding*2,h);
+        [cols[1],cols[2],cols[3]].forEach(x=>{ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+h);ctx.stroke();});
+        wrapCanvasText(ctx,row.name,cols[0]+12,y+10,nameWidth,lineHeight);
+        ctx.textAlign="right";
+        ctx.fillText(row.price,cols[2]-12,y+10);
+        ctx.fillText(row.qty,cols[3]-12,y+10);
+        ctx.fillText(row.subtotal,cols[4]-12,y+10);
+        ctx.textAlign="left";
+        y+=h;
+      });
+      ctx.font='bold 32px "Microsoft JhengHei", sans-serif';
+      ctx.textAlign="right";
+      ctx.fillText(`總計：${money(total)}`,width-padding,y+28);
+      return canvas;
     }
     async function shareReceiptImage(){
       if(!pendingOrder || !pendingOrder.items.length){
         alert("目前沒有可分享的訂單明細。");
         return;
       }
-      if(typeof html2canvas === "undefined"){
-        alert("圖片分享元件尚未載入，請稍後再試。");
-        return;
-      }
-      const card=buildShareCard();
       try{
-        const canvas=await html2canvas(card,{scale:2,backgroundColor:"#ffffff"});
+        const canvas=drawShareCanvas();
         const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));
         const filename=`福緣訂單明細_${pendingOrder.name}_${Date.now()}.png`;
         const file=new File([blob],filename,{type:"image/png"});
@@ -285,8 +341,16 @@
         }
       }catch(error){
         alert("圖片分享未完成，可以留在此頁繼續送出訂單。");
-      }finally{
-        card.remove();
+      }
+    }
+    async function openExternalBrowser(){
+      const url=location.href;
+      try{
+        window.open(url,"_blank","noopener,noreferrer");
+        if(navigator.clipboard) await navigator.clipboard.writeText(url);
+        alert("已嘗試開啟新瀏覽器分頁，並複製網址。若仍在 LINE 內建瀏覽器，請用右上角選單選「在瀏覽器開啟」。");
+      }catch(error){
+        alert(`請複製網址後用瀏覽器開啟：${url}`);
       }
     }
     function syncPendingToPage(){
@@ -375,6 +439,7 @@
       if(pick){ const o=state.orders.find(x=>x.id===pick.dataset.pick); const i=o.items.find(x=>x.id===pick.dataset.product); i.picked=pick.checked; o.status=o.items.some(x=>x.picked)?"picking":"new"; saveState(); renderAdmin(); renderShipping(); }
     });
     document.getElementById("categoryFilter").addEventListener("change",renderProducts);
+    document.getElementById("openExternal").addEventListener("click",openExternalBrowser);
     document.getElementById("addCustom").addEventListener("click",()=>{
       const name=document.getElementById("customName").value.trim();
       const price=Number(document.getElementById("customPrice").value||0);
@@ -391,7 +456,7 @@
     document.getElementById("shareReceiptImage").addEventListener("click",shareReceiptImage);
     document.getElementById("saveOrder").addEventListener("click",()=>{
       if(!pendingOrder.items.length){ alert("訂單沒有品項，請返回修改。"); return; }
-      const order={ id:makeOrderId(pendingOrder.name), name:pendingOrder.name, note:pendingOrder.note, items:pendingOrder.items.map(i=>({...i,picked:false})), status:"new", returns:[], createdAt:nowText(), createdAtISO:new Date().toISOString() };
+      const order={ id:makeOrderId(pendingOrder.name), name:pendingOrder.name, note:pendingOrder.note, items:pendingOrder.items.map(i=>({...i,picked:false})), status:"new", returns:[], createdAt:pendingOrder.createdAt || nowText(), createdAtISO:pendingOrder.createdAtISO || new Date().toISOString() };
       state.orders.unshift(order); saveState(); clearCart(); closeModal("receiptModal"); alert(`${order.id} 已送出。`);
     });
     initFilters(); renderProducts(); renderCustomList();
