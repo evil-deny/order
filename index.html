@@ -179,15 +179,17 @@
       const name=product.name;
       const category=product.category || "";
       const soupItems=["大爺蛋素猴菇薑母鴨","大爺蛋素酸菜鴨蛋素","大爺全素何首烏1包"];
-      const sideDishItems=["雪裡紅5斤","菜脯5斤","筍茸5斤","皇帝菜","牛蒡絲","嫩薑","水蓮藕5斤（1個單位）","蜜汁海帶卷（5斤1個單位）","百香果木瓜（10斤1個單位）","苦瓜（時價）","香辣筍","薄鹽毛豆"];
+      const sideDishItems=["雪裡紅5斤","菜脯5斤","筍茸5斤","皇帝菜","牛蒡絲","嫩薑","水蓮藕5斤（1個單位）","蜜汁海帶卷（5斤1個單位）","百香果木瓜（10斤1個單位）","苦瓜（時價）","香辣筍","薄鹽毛豆","花生麵筋","黃金貢饗"];
       const beanItems=["千張（5斤裝）","迷你包（5斤裝）"];
       const supplyItems=["沙拉脫"];
       const dryGoodsItems=["豆棗"];
+      const sauceItems=["和風"];
       if(soupItems.includes(name)) return "湯品/鍋物";
       if(sideDishItems.includes(name)) return "小菜類";
       if(beanItems.includes(name)) return "豆製品";
       if(supplyItems.includes(name)) return "包材/耗材";
       if(dryGoodsItems.includes(name)) return "乾貨";
+      if(sauceItems.includes(name)) return "醬料";
       if(/鬆/.test(name)) return "素鬆/鬆類";
       if(/[湯鍋羹]|四神|麻辣燙/.test(name)) return "湯品/鍋物";
       if(/豆腐|豆包|豆干|豆皮|百頁|腐竹|油泡|干絲|花干|三角|四角|豆漿|豆腱/.test(name)) return "豆製品";
@@ -195,7 +197,7 @@
       if(/排|肉|雞|鵝|腿|蹄|培根|火腿|香腸|腸|燻|素肚|素雞|植物肉|三牲|腰花/.test(name)) return "素肉/調理肉品";
       if(/魚|蝦|花枝|鮑|干貝|鱈|鮭|海味|烏魚子|鰻/.test(name)) return "海味/魚蝦類";
       if(/菇|菜|筍|蓮|藕|薑|香菜|木瓜|木耳|苦瓜|毛豆|海帶|牛蒡|雪裡紅|菜脯|珊瑚草/.test(name)) return "蔬菜/菇類";
-      if(/醬|油|蠔油|香油|米豆|剝皮辣椒|花生麵筋|罐|黃金|鹹魚/.test(name)) return "醬料/罐頭小菜";
+      if(/醬|油|蠔油|香油|米豆|剝皮辣椒|罐|鹹魚/.test(name)) return "醬料";
       if(/袋|盒|瓶|橡皮筋|束繩|包材|透明|花袋/.test(name) || category.includes("公司庫存") && product.price===0) return "包材/耗材";
       if(/糕|餅|卷|瓜子|點心|抓餅/.test(name)) return "糕餅/點心";
       if(/麵|鐵板/.test(name)) return "麵食";
