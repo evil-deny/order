@@ -18,41 +18,41 @@ html = r'''<!doctype html>
       font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-size:16px;letter-spacing:0}
+    body{margin:0;background:var(--bg);color:var(--ink);font-size:18px;letter-spacing:0}
     button,input,select{font:inherit}
     button{border:0;border-radius:8px;cursor:pointer;font-weight:800}
     .topbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px clamp(12px,3vw,28px);background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(15,23,42,.05)}
     .brand{display:flex;align-items:center;gap:10px;min-width:0}
     .brand img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#fff}
-    .brand strong{display:block;font-size:22px;line-height:1.1}.brand span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
-    .admin-open,.secondary{min-height:42px;padding:0 14px;background:#e8eef5;color:#243244}
+    .brand strong{display:block;font-size:26px;line-height:1.1}.brand span{display:block;color:var(--muted);font-size:16px;margin-top:3px}
+    .admin-open,.secondary{min-height:48px;padding:0 16px;background:#e8eef5;color:#243244}
     .wrap{max-width:1120px;margin:0 auto;padding:14px 12px 116px}
     .box,.category,.custom-panel{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
     .customer-box{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;padding:12px;margin-bottom:12px}
-    label{display:grid;gap:6px;color:var(--muted);font-size:14px;font-weight:800}
-    input,select{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:#fff;outline:none}
+    label{display:grid;gap:6px;color:var(--muted);font-size:17px;font-weight:800}
+    input,select{width:100%;min-height:52px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:#fff;outline:none;font-size:19px}
     input:focus,select:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
     .custom-panel{padding:12px;margin-bottom:12px}
     .main-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
-    .main-tab{min-height:48px;background:#e2e8f0;color:#243244;font-size:17px}
+    .main-tab{min-height:54px;background:#e2e8f0;color:#243244;font-size:21px}
     .main-tab.active{background:var(--main);color:#fff}
     .main-view{display:none}.main-view.active{display:block}
     .custom-grid{display:grid;grid-template-columns:minmax(0,1.5fr) 120px 100px auto;gap:8px;align-items:end}
     .custom-list{display:grid;gap:8px;margin-top:10px}
     .search-row{position:sticky;top:69px;z-index:15;display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:10px;padding:10px 0;background:var(--bg)}
-    .category{margin-top:14px;overflow:hidden}.category-title{display:flex;justify-content:space-between;align-items:center;padding:14px;background:#eef5f5;border-bottom:1px solid var(--line);font-size:19px;font-weight:900}
-    .category-count{color:var(--muted);font-size:13px;font-weight:700}.items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px}
+    .category{margin-top:14px;overflow:hidden}.category-title{display:flex;justify-content:space-between;align-items:center;padding:14px;background:#eef5f5;border-bottom:1px solid var(--line);font-size:23px;font-weight:900}
+    .category-count{color:var(--muted);font-size:17px;font-weight:700}.items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px}
     .item{display:grid;grid-template-columns:82px minmax(0,1fr);gap:10px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}
-    .item img{width:82px;height:82px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#f1f5f9}.item h3{margin:0;font-size:17px;line-height:1.35;word-break:break-word}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:7px 0 10px;color:var(--muted);font-size:13px;font-weight:700}.price{color:var(--red);font-size:17px}.stock{color:var(--amber);background:#fff7ed;padding:2px 7px;border-radius:99px}
-    .qty{display:grid;grid-template-columns:42px minmax(48px,1fr) 42px;gap:7px;align-items:center}.qty button{width:42px;height:42px;background:#e2e8f0;color:#243244;font-size:22px}.qty input{min-height:42px;text-align:center;padding:4px;font-size:20px;font-weight:900}
+    .item img{width:82px;height:82px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#f1f5f9}.item h3{margin:0;font-size:21px;line-height:1.35;word-break:break-word}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:7px 0 10px;color:var(--muted);font-size:16px;font-weight:700}.price{color:var(--red);font-size:20px}.stock{color:var(--amber);background:#fff7ed;padding:2px 7px;border-radius:99px}
+    .qty{display:grid;grid-template-columns:46px minmax(54px,1fr) 46px;gap:7px;align-items:center}.qty button{width:46px;height:46px;background:#e2e8f0;color:#243244;font-size:24px}.qty input{min-height:46px;text-align:center;padding:4px;font-size:24px;font-weight:900}
     .bottom-bar{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;justify-content:center;padding:10px 12px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(15,23,42,.08)}
-    .bottom-inner{width:min(1120px,100%);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}.total{font-size:15px;color:var(--muted);font-weight:800}.total strong{display:block;color:var(--red);font-size:28px;line-height:1.05}
-    .checkout,.primary{min-height:46px;padding:0 16px;background:var(--main);color:#fff}.checkout{min-height:54px;font-size:18px}.danger{min-height:42px;padding:0 13px;background:var(--red);color:#fff}.blue{min-height:42px;padding:0 13px;background:var(--blue);color:#fff}
+    .bottom-inner{width:min(1120px,100%);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}.total{font-size:18px;color:var(--muted);font-weight:800}.total strong{display:block;color:var(--red);font-size:34px;line-height:1.05}
+    .checkout,.primary{min-height:52px;padding:0 18px;background:var(--main);color:#fff}.checkout{min-height:62px;font-size:22px}.danger{min-height:48px;padding:0 15px;background:var(--red);color:#fff}.blue{min-height:48px;padding:0 15px;background:var(--blue);color:#fff}
     .modal{display:none;position:fixed;inset:0;z-index:50;background:rgba(15,23,42,.55);padding:12px;align-items:center;justify-content:center}.modal.show{display:flex}.modal-card{width:min(980px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:12px;box-shadow:0 24px 60px rgba(15,23,42,.25)}
     .modal-head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:#fff;border-bottom:1px solid var(--line)}.modal-head h2{margin:0;font-size:21px}.close{width:40px;height:40px;background:#e2e8f0}
     .modal-body{padding:16px}.line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:10px;border:1px solid var(--line);border-radius:8px;background:#f8fafc}.line-actions{display:flex;gap:6px;align-items:center;justify-content:flex-end}.line-actions button{width:36px;height:36px;background:#e2e8f0}.line-actions .remove{background:#fee2e2;color:#991b1b;width:auto;padding:0 10px}.receipt-list,.pick-list{display:grid;gap:8px;margin:12px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-    .admin-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:14px}.tab{min-height:44px;background:#e2e8f0;color:#243244}.tab.active{background:var(--main);color:#fff}.admin-view{display:none}.admin-view.active{display:block}
+    .admin-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}.tab{min-height:52px;background:#e2e8f0;color:#243244}.tab.active{background:var(--main);color:#fff}.admin-view{display:none}.admin-view.active{display:block}
     .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}.metric{padding:14px;border:1px solid var(--line);border-radius:10px;background:#f8fafc}.metric span{color:var(--muted);font-size:13px;font-weight:800}.metric strong{display:block;margin-top:7px;font-size:25px}
     .order-card,.inventory-row{display:grid;gap:10px;padding:12px;margin-bottom:10px;border:1px solid var(--line);border-radius:10px;background:#fff}.order-title{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:900}.badge{display:inline-flex;align-items:center;min-height:26px;padding:2px 9px;border-radius:99px;background:#dbeafe;color:#1d4ed8;font-size:13px;font-weight:900}.badge.shipped{background:#dcfce7;color:#166534}.badge.returned{background:#fee2e2;color:#991b1b}.badge.done{background:#dcfce7;color:#166534}
     .check{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:8px;background:#f8fafc}.check input{width:20px;min-height:20px;accent-color:var(--main)}
@@ -75,6 +75,7 @@ html = r'''<!doctype html>
       .print-total{font-size:24px;font-weight:bold;text-align:right;margin-top:14px;padding:10px;border:2px solid #111}
     }
     .receipt-card{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+    .table-wrap{overflow-x:auto}
     .receipt-title{padding:16px;background:#eef5f5;text-align:center}
     .receipt-title h3{margin:0;font-size:24px}
     .receipt-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:14px;border-bottom:1px solid var(--line)}
@@ -87,7 +88,7 @@ html = r'''<!doctype html>
     .receipt-edit button{width:34px;height:34px;background:#e2e8f0}
     .receipt-edit .remove{width:auto;padding:0 10px;background:#fee2e2;color:#991b1b}
     .receipt-total-row{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:14px;padding:14px 16px;font-size:24px;font-weight:900;background:#fff7ed;border:2px solid #f59e0b;border-radius:10px;color:#9a3412}
-    @media(max-width:760px){.topbar{padding:12px;align-items:flex-start}.brand img{width:48px;height:48px}.brand strong{font-size:19px}.wrap{padding-bottom:126px}.customer-box,.search-row,.items,.bottom-inner,.metrics,.inventory-row,.custom-grid,.receipt-info{grid-template-columns:1fr}.search-row{top:65px}.main-tabs{grid-template-columns:1fr}.item{grid-template-columns:76px minmax(0,1fr);padding:9px}.item img{width:76px;height:76px}.item h3{font-size:16px}.qty{grid-template-columns:40px minmax(46px,1fr) 40px}.qty button{width:40px;height:40px}.checkout{width:100%}.admin-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.modal-body{padding:12px}.line{grid-template-columns:1fr}.line-actions{justify-content:flex-start}.return-line{grid-template-columns:24px minmax(0,1fr)}.receipt-table th:nth-child(2),.receipt-table td:nth-child(2){display:none}.receipt-table th,.receipt-table td{padding:9px 8px}}
+    @media(max-width:760px){.topbar{padding:12px;align-items:flex-start}.brand img{width:48px;height:48px}.brand strong{font-size:22px}.wrap{padding-bottom:132px}.customer-box,.search-row,.items,.bottom-inner,.metrics,.inventory-row,.custom-grid,.receipt-info{grid-template-columns:1fr}.search-row{top:65px}.main-tabs{grid-template-columns:1fr}.item{grid-template-columns:76px minmax(0,1fr);padding:9px}.item img{width:76px;height:76px}.item h3{font-size:20px}.checkout{width:100%}.admin-tabs{grid-template-columns:1fr}.modal-body{padding:12px}.line{grid-template-columns:1fr}.line-actions{justify-content:flex-start}.return-line{grid-template-columns:24px minmax(0,1fr)}.receipt-table th:nth-child(2),.receipt-table td:nth-child(2){display:none}.receipt-table th,.receipt-table td{padding:9px 8px}}
   </style>
 </head>
 <body>
@@ -135,7 +136,7 @@ html = r'''<!doctype html>
 
   <section class="modal" id="receiptModal"><div class="modal-card"><div class="modal-head"><h2>訂單確認</h2><button class="close" data-close="receiptModal">×</button></div><div class="modal-body"><div id="receiptContent"></div><div class="actions"><button class="secondary" data-close="receiptModal">返回修改</button><button class="blue" id="printReceipt">影印明細</button><button class="blue" id="shareReceiptImage">圖片分享</button><button class="primary" id="saveOrder">送出訂單</button></div></div></div></section>
   <section class="modal" id="adminLogin"><div class="modal-card" style="max-width:420px"><div class="modal-head"><h2>後台登入</h2><button class="close" data-close="adminLogin">×</button></div><div class="modal-body"><label>密碼<input id="adminPassword" type="password" inputmode="numeric" placeholder="請輸入密碼"></label><div class="actions"><button class="primary" id="loginAdmin">進入後台</button></div></div></div></section>
-  <section class="modal" id="adminPanel"><div class="modal-card"><div class="modal-head"><h2>後台管理</h2><button class="close" data-close="adminPanel">×</button></div><div class="modal-body"><div class="admin-tabs"><button class="tab active" data-admin-tab="overview">總覽</button><button class="tab" data-admin-tab="inventory">庫存</button></div><div class="admin-view active" id="overview"></div><div class="admin-view" id="inventory"></div></div></div></section>
+  <section class="modal" id="adminPanel"><div class="modal-card"><div class="modal-head"><h2>後台管理</h2><button class="close" data-close="adminPanel">×</button></div><div class="modal-body"><div class="admin-tabs"><button class="tab active" data-admin-tab="overview">總覽</button><button class="tab" data-admin-tab="dailySummary">日品項統計</button><button class="tab" data-admin-tab="inventory">庫存</button></div><div class="admin-view active" id="overview"></div><div class="admin-view" id="dailySummary"></div><div class="admin-view" id="inventory"></div></div></div></section>
 
   <script>
     const PRODUCTS = __PRODUCTS__;
@@ -180,6 +181,23 @@ html = r'''<!doctype html>
     }
     function statusText(s){ return {new:"待出貨",picking:"揀貨中",shipped:"已出貨",returned:"已退貨"}[s] || s; }
     function makeOrderId(name){ return `${name}-${new Date().toISOString().slice(2,10).replaceAll("-","")}-${String(state.orders.length+1).padStart(3,"0")}`; }
+    function productType(product){
+      const name=product.name;
+      const category=product.category || "";
+      if(/[湯鍋羹]|四神|麻辣燙/.test(name)) return "湯品/鍋物";
+      if(/鬆/.test(name)) return "素鬆/鬆類";
+      if(/豆腐|豆包|豆干|豆皮|百頁|腐竹|油泡|干絲|花干|三角|四角|豆漿|豆腱/.test(name)) return "豆製品";
+      if(/丸|貢丸|火鍋料|花球|蟹球|絲丸|獅子頭/.test(name)) return "丸類/火鍋料";
+      if(/排|肉|雞|鵝|腿|蹄|培根|火腿|香腸|腸|燻|素肚|素雞|植物肉|三牲|腰花/.test(name)) return "素肉/調理肉品";
+      if(/魚|蝦|花枝|鮑|干貝|鱈|鮭|海味|烏魚子|鰻/.test(name)) return "海味/魚蝦類";
+      if(/菇|菜|筍|蓮|藕|薑|香菜|木瓜|木耳|苦瓜|毛豆|海帶|牛蒡|雪裡紅|菜脯|珊瑚草/.test(name)) return "蔬菜/菇類";
+      if(/醬|油|蠔油|香油|米豆|剝皮辣椒|花生麵筋|罐|黃金|鹹魚/.test(name)) return "醬料/罐頭小菜";
+      if(/袋|盒|瓶|橡皮筋|束繩|包材|透明|花袋/.test(name) || category.includes("公司庫存") && product.price===0) return "包材/耗材";
+      if(/糕|餅|卷|瓜子|點心|抓餅/.test(name)) return "糕餅/點心";
+      if(/麵|鐵板/.test(name)) return "麵食";
+      if(category.includes("公司庫存")) return "公司庫存其他";
+      return "其他訂購品";
+    }
     function setMainView(id){
       document.querySelectorAll(".main-tab").forEach(b=>b.classList.toggle("active",b.dataset.mainView===id));
       document.querySelectorAll(".main-view").forEach(v=>v.classList.toggle("active",v.id===id));
@@ -189,17 +207,17 @@ html = r'''<!doctype html>
     }
 
     function initFilters(){
-      const categories=["全部分類",...new Set(PRODUCTS.map(p=>p.category))];
+      const categories=["全部分類",...new Set(PRODUCTS.map(p=>productType(p)))];
       document.getElementById("categoryFilter").innerHTML=categories.map(c=>`<option value="${c}">${c}</option>`).join("");
     }
     function visibleProducts(){
       const keyword=document.getElementById("search").value.trim().toLowerCase();
       const cat=document.getElementById("categoryFilter").value;
-      return PRODUCTS.filter(p => p.name.toLowerCase().includes(keyword) && (cat==="全部分類" || p.category===cat));
+      return PRODUCTS.filter(p => p.name.toLowerCase().includes(keyword) && (cat==="全部分類" || productType(p)===cat));
     }
     function renderProducts(){
       const grouped=new Map();
-      visibleProducts().forEach(p=>{ if(!grouped.has(p.category)) grouped.set(p.category,[]); grouped.get(p.category).push(p); });
+      visibleProducts().forEach(p=>{ const type=productType(p); if(!grouped.has(type)) grouped.set(type,[]); grouped.get(type).push(p); });
       document.getElementById("productList").innerHTML=[...grouped.entries()].map(([category,items])=>`
         <section class="category"><div class="category-title"><span>${category}</span><span class="category-count">${items.length} 項</span></div><div class="items">
         ${items.map(p=>`<article class="item"><img src="${p.image||PLACEHOLDER}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'"><div><h3>${p.name}</h3><div class="meta"><span class="price">單價 ${money(p.price)}</span>${state.stock[p.id]===null?"":`<span class="stock">庫存 ${state.stock[p.id]}</span>`}</div><div class="qty"><button type="button" data-minus="${p.id}">−</button><input id="qty-${p.id}" type="number" min="0" value="${standardCart[p.id] || 0}" inputmode="numeric" data-qty="${p.id}"><button type="button" data-plus="${p.id}">＋</button></div></div></article>`).join("")}
@@ -408,7 +426,7 @@ html = r'''<!doctype html>
       const sumNet=orders=>orders.reduce((s,o)=>s+orderTotal(o)-returnedTotal(o),0);
       const detail=orders=>orders.map(o=>`<div class="line"><span>${dateKey(orderDate(o))}｜${o.id}<br><small>${statusText(o.status)} · 送單 ${o.createdAt||"-"}${o.shippedAt?` · 出貨 ${o.shippedAt}`:""}${o.returnedAt?` · 退貨 ${o.returnedAt}`:""}${o.returnClosedAt?` · 退貨結案 ${o.returnClosedAt}`:""}</small></span><strong>${money(orderTotal(o)-returnedTotal(o))}</strong></div>`).join("")||`<div class="empty">此區間尚無訂單。</div>`;
       document.getElementById("overview").innerHTML=`<div class="metrics"><div class="metric"><span>訂單數</span><strong>${state.orders.length}</strong></div><div class="metric"><span>待出貨</span><strong>${pending}</strong></div><div class="metric"><span>已出貨</span><strong>${shipped}</strong></div><div class="metric"><span>淨營業額</span><strong>${money(gross-returns)}</strong></div><div class="metric"><span>本週營業額</span><strong>${money(sumNet(weekOrders))}</strong></div><div class="metric"><span>本月營業額</span><strong>${money(sumNet(monthOrders))}</strong></div><div class="metric"><span>本週訂單</span><strong>${weekOrders.length}</strong></div><div class="metric"><span>本月訂單</span><strong>${monthOrders.length}</strong></div></div><h3>本週明細</h3><div class="receipt-list">${detail(weekOrders)}</div><h3>本月明細</h3><div class="receipt-list">${detail(monthOrders)}</div><h3>全部訂單</h3>${state.orders.map(orderCard).join("")||`<div class="empty">目前尚無訂單。</div>`}`;
-      renderInventory();
+      renderDailySummary(); renderInventory();
     }
     function orderCard(order){
       return `<div class="order-card"><div class="order-title"><span>${order.id}</span><span class="badge ${order.status}">${statusText(order.status)}</span></div><div class="meta">送單 ${order.createdAt || "-"}${order.shippedAt?` · 出貨 ${order.shippedAt}`:""}${order.returnedAt?` · 退貨 ${order.returnedAt}`:""}</div><div class="receipt-list">${order.items.map(i=>`<div class="line"><span>${itemName(i)} · 單價 ${money(itemPrice(i))} × ${i.qty}</span><strong>${money(itemSubtotal(i))}</strong></div>`).join("")}</div><div><strong>總計：</strong>${money(orderTotal(order)-returnedTotal(order))}${order.note?` ｜備註：${order.note}`:""}</div><div class="actions"><button class="danger" data-delete-order="${order.id}">刪除這筆明細</button></div></div>`;
@@ -428,7 +446,28 @@ html = r'''<!doctype html>
       }).join("")||`<div class="empty">尚無可退貨訂單。</div>`}</div></section>`;
     }
     function renderInventory(){
-      document.getElementById("inventory").innerHTML=PRODUCTS.map(p=>`<div class="inventory-row"><div><strong>${p.name}</strong><div class="meta">${p.category} · 單價 ${money(p.price)}</div></div><div><span class="meta">庫存</span><strong>${state.stock[p.id]===null?"未控管":state.stock[p.id]}</strong></div><div><span class="meta">實銷</span><strong>${soldQty(p.id)}</strong></div><div><span class="meta">銷售額</span><strong>${money(soldQty(p.id)*p.price)}</strong></div><div class="stock-controls"><button data-stock-dec="${p.id}">−</button><input type="number" min="0" value="${state.stock[p.id]===null?0:state.stock[p.id]}" data-stock-input="${p.id}"><button data-stock-inc="${p.id}">＋</button></div></div>`).join("");
+      document.getElementById("inventory").innerHTML=PRODUCTS.map(p=>`<div class="inventory-row"><div><strong>${p.name}</strong><div class="meta">${productType(p)} · ${p.category} · 單價 ${money(p.price)}</div></div><div><span class="meta">庫存</span><strong>${state.stock[p.id]===null?"未控管":state.stock[p.id]}</strong></div><div><span class="meta">實銷</span><strong>${soldQty(p.id)}</strong></div><div><span class="meta">銷售額</span><strong>${money(soldQty(p.id)*p.price)}</strong></div><div class="stock-controls"><button data-stock-dec="${p.id}">−</button><input type="number" min="0" value="${state.stock[p.id]===null?0:state.stock[p.id]}" data-stock-input="${p.id}"><button data-stock-inc="${p.id}">＋</button></div></div>`).join("");
+    }
+    function renderDailySummary(){
+      const byDate=new Map();
+      state.orders.forEach(order=>{
+        const key=dateKey(orderDate(order));
+        if(!byDate.has(key)) byDate.set(key,new Map());
+        const bucket=byDate.get(key);
+        order.items.forEach(item=>{
+          const keyItem=item.custom?`custom:${item.name}:${item.price}`:item.id;
+          const existing=bucket.get(keyItem)||{name:itemName(item),type:item.custom?"客製化品項":productType(product(item.id)),price:itemPrice(item),qty:0,total:0};
+          existing.qty+=item.qty;
+          existing.total+=itemSubtotal(item);
+          bucket.set(keyItem,existing);
+        });
+      });
+      const dates=[...byDate.keys()].sort().reverse();
+      document.getElementById("dailySummary").innerHTML=dates.map(day=>{
+        const rows=[...byDate.get(day).values()].sort((a,b)=>a.type.localeCompare(b.type,"zh-Hant")||a.name.localeCompare(b.name,"zh-Hant"));
+        const dayTotal=rows.reduce((sum,row)=>sum+row.total,0);
+        return `<section class="category"><div class="category-title"><span>${day} 品項合計</span><span class="category-count">${rows.length} 項 · ${money(dayTotal)}</span></div><div class="table-wrap"><table class="receipt-table"><thead><tr><th>類型</th><th>品項</th><th>單價</th><th>合計數量</th><th>金額</th></tr></thead><tbody>${rows.map(row=>`<tr><td>${row.type}</td><td>${row.name}</td><td>${money(row.price)}</td><td>${row.qty}</td><td>${money(row.total)}</td></tr>`).join("")}</tbody></table></div></section>`;
+      }).join("")||`<div class="empty">目前尚無訂單可統計。</div>`;
     }
 
     document.addEventListener("click", e=>{
