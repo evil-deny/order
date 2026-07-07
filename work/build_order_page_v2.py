@@ -184,10 +184,16 @@ html = r'''<!doctype html>
     function productType(product){
       const name=product.name;
       const category=product.category || "";
-      const soupItems=["大爺蛋素猴菇薑母鴨","大爺蛋素酸菜鴨蛋素"];
+      const soupItems=["大爺蛋素猴菇薑母鴨","大爺蛋素酸菜鴨蛋素","大爺全素何首烏1包"];
       const sideDishItems=["雪裡紅5斤","菜脯5斤","筍茸5斤","皇帝菜","牛蒡絲","嫩薑","水蓮藕5斤（1個單位）","蜜汁海帶卷（5斤1個單位）","百香果木瓜（10斤1個單位）","苦瓜（時價）","香辣筍","薄鹽毛豆"];
+      const beanItems=["千張（5斤裝）","迷你包（5斤裝）"];
+      const supplyItems=["沙拉脫"];
+      const dryGoodsItems=["豆棗"];
       if(soupItems.includes(name)) return "湯品/鍋物";
       if(sideDishItems.includes(name)) return "小菜類";
+      if(beanItems.includes(name)) return "豆製品";
+      if(supplyItems.includes(name)) return "包材/耗材";
+      if(dryGoodsItems.includes(name)) return "乾貨";
       if(/鬆/.test(name)) return "素鬆/鬆類";
       if(/[湯鍋羹]|四神|麻辣燙/.test(name)) return "湯品/鍋物";
       if(/豆腐|豆包|豆干|豆皮|百頁|腐竹|油泡|干絲|花干|三角|四角|豆漿|豆腱/.test(name)) return "豆製品";
