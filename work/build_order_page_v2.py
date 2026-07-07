@@ -184,8 +184,8 @@ html = r'''<!doctype html>
     function productType(product){
       const name=product.name;
       const category=product.category || "";
-      if(/[湯鍋羹]|四神|麻辣燙/.test(name)) return "湯品/鍋物";
       if(/鬆/.test(name)) return "素鬆/鬆類";
+      if(/[湯鍋羹]|四神|麻辣燙/.test(name)) return "湯品/鍋物";
       if(/豆腐|豆包|豆干|豆皮|百頁|腐竹|油泡|干絲|花干|三角|四角|豆漿|豆腱/.test(name)) return "豆製品";
       if(/丸|貢丸|火鍋料|花球|蟹球|絲丸|獅子頭/.test(name)) return "丸類/火鍋料";
       if(/排|肉|雞|鵝|腿|蹄|培根|火腿|香腸|腸|燻|素肚|素雞|植物肉|三牲|腰花/.test(name)) return "素肉/調理肉品";
