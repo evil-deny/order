@@ -10,7 +10,7 @@
   {
     "id": "p2",
     "category": "公司庫存",
-    "name": "如意紅毛苔",
+    "name": "如意紅毛苔素鬆",
     "price": 55,
     "stock": 50,
     "image": "https://img.cloudimg.in/uploads/shops/7665/products/63/632f3f172283b68076619d9fe8b3315b.jpg"
@@ -18,7 +18,7 @@
   {
     "id": "p3",
     "category": "公司庫存",
-    "name": "如意猴頭菇",
+    "name": "如意猴頭菇素鬆",
     "price": 55,
     "stock": 50,
     "image": "https://cdn1.cybassets.com/media/W1siZiIsIjE4MjMzL3Byb2R1Y3RzLzMzODc3ODIyLzE3MjExNzk2MDlfOWQ4YzE5ZGRjZWY2NWUwMDdiYjIuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDYwMCJdXQ.jpeg?sha=4fb73073fae9806a"
@@ -26,7 +26,7 @@
   {
     "id": "p4",
     "category": "公司庫存",
-    "name": "如意香菇",
+    "name": "如意香菇素鬆",
     "price": 55,
     "stock": 50,
     "image": "https://cdn1.cybassets.com/media/W1siZiIsIjE4MjMzL3Byb2R1Y3RzLzMzODc3ODIxLzE3MjExNzk2MjJfMjkxZjczMGM2YzAyNWIzMGEyMTMuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDYwMCJdXQ.jpeg?sha=f97cfb550cd2d842"
@@ -34,7 +34,7 @@
   {
     "id": "p5",
     "category": "公司庫存",
-    "name": "如意堅果",
+    "name": "如意堅果素鬆",
     "price": 55,
     "stock": 50,
     "image": "https://cdn1.cybassets.com/media/W1siZiIsIjE4MjMzL3Byb2R1Y3RzLzMzODc3ODI0LzE3MjExNzk2MzNfY2RmYjkyOGI1MGViYTViM2RhNWYuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDYwMCJdXQ.jpeg?sha=144df23ce2f81b83"
@@ -42,7 +42,7 @@
   {
     "id": "p6",
     "category": "公司庫存",
-    "name": "如意海苔",
+    "name": "如意海苔素鬆",
     "price": 55,
     "stock": 50,
     "image": "https://cdn1.cybassets.com/media/W1siZiIsIjE4MjMzL3Byb2R1Y3RzLzQ3NDg4OTI5LzE3MjExNzk1MDFfZTM5YTgwZWRjNmY4MTU4N2MxNjcuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDYwMCJdXQ.jpeg?sha=f65e90b4dd83b5aa"
@@ -50,7 +50,7 @@
   {
     "id": "p7",
     "category": "公司庫存",
-    "name": "如意牛蒡酥",
+    "name": "如意牛蒡酥素鬆",
     "price": 55,
     "stock": 50,
     "image": "https://cdn1.cybassets.com/media/W1siZiIsIjE4MjMzL3Byb2R1Y3RzLzQ3MDY3NjgwLzE3MjExNzk1MThfYjk0Y2UwZjY0MjExZWM0MTc3ZjEuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDYwMCJdXQ.jpeg?sha=1f907eb139558275"
@@ -58,7 +58,7 @@
   {
     "id": "p8",
     "category": "公司庫存",
-    "name": "如意金瓜",
+    "name": "如意金瓜素鬆",
     "price": 55,
     "stock": 50,
     "image": "https://cdn1.cybassets.com/media/W1siZiIsIjE4MjMzL3Byb2R1Y3RzLzMzODc3ODI1LzE3MjExNzk2NDlfZTQyMDcwNzc5YzI1YjJhY2E3NzEuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDYwMCJdXQ.jpeg?sha=2211321d4539dc5c"
@@ -1530,7 +1530,7 @@
   {
     "id": "p192",
     "category": "兩天一次(三五日結單/一四六到貨)",
-    "name": "如意鹹蛋黃",
+    "name": "如意鹹蛋黃素鬆",
     "price": 55,
     "stock": null,
     "image": "https://www.yh-food.com/_i/assets/upload/shop/d93aa3a4a04dbd2feb16edc914fba35b.jpg"
@@ -1538,7 +1538,7 @@
   {
     "id": "p193",
     "category": "兩天一次(三五日結單/一四六到貨)",
-    "name": "如意黑芝麻",
+    "name": "如意黑芝麻素鬆",
     "price": 55,
     "stock": null,
     "image": "https://img.cloudimg.in/uploads/shops/20867/products/97/970c7ebee19549213f3f726a7031ed04.jpg"
@@ -1546,7 +1546,7 @@
   {
     "id": "p194",
     "category": "兩天一次(三五日結單/一四六到貨)",
-    "name": "如意秀珍菇",
+    "name": "如意秀珍菇素鬆",
     "price": 55,
     "stock": null,
     "image": "https://img.pchome.com.tw/cs/items/DBAR5IA900FOSA6/000001_1666766183.jpg"
@@ -1554,7 +1554,7 @@
   {
     "id": "p195",
     "category": "兩天一次(三五日結單/一四六到貨)",
-    "name": "如意羽衣甘藍",
+    "name": "如意羽衣甘藍素鬆",
     "price": 55,
     "stock": null,
     "image": "https://yeongfa.com/wp-content/uploads/2023/07/S__44589431.jpg"
@@ -1562,7 +1562,7 @@
   {
     "id": "p196",
     "category": "兩天一次(三五日結單/一四六到貨)",
-    "name": "如意玉米濃湯",
+    "name": "如意玉米濃湯素鬆",
     "price": 55,
     "stock": null,
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYH6CalMyo4Xhkpcpa5zbGxQGShLPmk7Apaw&s"
