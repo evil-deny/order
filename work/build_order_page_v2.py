@@ -193,15 +193,13 @@ html = r'''<!doctype html>
       const category=product.category || "";
       const soupItems=["大爺蛋素猴菇薑母鴨","大爺蛋素酸菜鴨蛋素","大爺全素何首烏1包","大爺蛋素帝王大補蛋素","大爺蛋素佛跳牆"];
       const sideDishItems=["雪裡紅5斤","菜脯5斤","筍茸5斤","皇帝菜","牛蒡絲","嫩薑","水蓮藕5斤（1個單位）","蜜汁海帶卷（5斤1個單位）","百香果木瓜（10斤1個單位）","苦瓜（時價）","香辣筍","薄鹽毛豆","花生麵筋","黃金貢饗"];
-      const beanItems=["千張（5斤裝）","迷你包（5斤裝）"];
+      const beanItems=["千張（5斤裝）","迷你包（5斤裝）","豆棗","皮絲5斤","切角3斤","龍珠5斤","胖輪5斤"];
       const supplyItems=["沙拉脫"];
-      const dryGoodsItems=["豆棗","皮絲5斤","切角3斤","龍珠5斤","胖輪5斤"];
       const sauceItems=["和風"];
       if(soupItems.includes(name)) return "湯品/鍋物";
       if(sideDishItems.includes(name)) return "小菜類";
       if(beanItems.includes(name)) return "豆製品";
       if(supplyItems.includes(name)) return "包材/耗材";
-      if(dryGoodsItems.includes(name)) return "乾貨";
       if(sauceItems.includes(name)) return "醬料";
       if(/鬆/.test(name)) return "素鬆/鬆類";
       if(/[湯鍋羹]|四神|麻辣燙/.test(name)) return "湯品/鍋物";
@@ -217,6 +215,22 @@ html = r'''<!doctype html>
       if(category.includes("公司庫存")) return "公司庫存其他";
       return "其他訂購品";
     }
+    function productStorage(product){
+      const name=product.name;
+      const type=productType(product);
+      const dryGoodsItems=["豆棗","皮絲5斤","切角3斤","龍珠5斤","胖輪5斤"];
+      if(dryGoodsItems.includes(name)) return "乾貨";
+      if(["包材/耗材","素鬆/鬆類","醬料"].includes(type)) return "乾貨";
+      if(["小菜類","豆製品","蔬菜/菇類"].includes(type)) return "冷藏";
+      return "冷凍";
+    }
+    function productGroupLabel(product){ return `${productStorage(product)} / ${productType(product)}`; }
+    function storageRank(storage){ return {冷凍:0,冷藏:1,乾貨:2}[storage] ?? 9; }
+    function typeRank(type){
+      const order=["湯品/鍋物","丸類/火鍋料","素肉/調理肉品","海味/魚蝦類","糕餅/點心","麵食","小菜類","豆製品","蔬菜/菇類","醬料","素鬆/鬆類","包材/耗材","公司庫存其他","其他訂購品"];
+      const index=order.indexOf(type);
+      return index<0 ? 99 : index;
+    }
     function setMainView(id){
       document.querySelectorAll(".main-tab").forEach(b=>b.classList.toggle("active",b.dataset.mainView===id));
       document.querySelectorAll(".main-view").forEach(v=>v.classList.toggle("active",v.id===id));
@@ -226,17 +240,24 @@ html = r'''<!doctype html>
     }
 
     function initFilters(){
-      const categories=["全部分類",...new Set(PRODUCTS.map(p=>productType(p)))];
+      const groupLabels=[...new Set([...PRODUCTS].sort(productSort).map(p=>productGroupLabel(p)))];
+      const categories=["全部品項","冷凍","冷藏","乾貨",...groupLabels];
       document.getElementById("categoryFilter").innerHTML=categories.map(c=>`<option value="${c}">${c}</option>`).join("");
     }
     function visibleProducts(){
       const keyword=document.getElementById("search").value.trim().toLowerCase();
       const cat=document.getElementById("categoryFilter").value;
-      return PRODUCTS.filter(p => p.name.toLowerCase().includes(keyword) && (cat==="全部分類" || productType(p)===cat));
+      return PRODUCTS.filter(p => p.name.toLowerCase().includes(keyword) && (cat==="全部品項" || productStorage(p)===cat || productGroupLabel(p)===cat)).sort(productSort);
+    }
+    function productSort(a,b){
+      return storageRank(productStorage(a))-storageRank(productStorage(b))
+        || typeRank(productType(a))-typeRank(productType(b))
+        || productType(a).localeCompare(productType(b),"zh-Hant")
+        || a.name.localeCompare(b.name,"zh-Hant");
     }
     function renderProducts(){
       const grouped=new Map();
-      visibleProducts().forEach(p=>{ const type=productType(p); if(!grouped.has(type)) grouped.set(type,[]); grouped.get(type).push(p); });
+      visibleProducts().forEach(p=>{ const label=productGroupLabel(p); if(!grouped.has(label)) grouped.set(label,[]); grouped.get(label).push(p); });
       document.getElementById("productList").innerHTML=[...grouped.entries()].map(([category,items])=>`
         <section class="category"><div class="category-title"><span>${category}</span><span class="category-count">${items.length} 項</span></div><div class="items">
         ${items.map(p=>`<article class="item"><img src="${p.image||PLACEHOLDER}" alt="${p.name}" loading="lazy" onerror="this.src='${PLACEHOLDER}'"><div><h3>${p.name}</h3><div class="meta"><span class="price">單價 ${money(p.price)}</span>${state.stock[p.id]===null?"":`<span class="stock">庫存 ${state.stock[p.id]}</span>`}</div><div class="qty"><button type="button" data-minus="${p.id}">−</button><input id="qty-${p.id}" type="number" min="0" value="${standardCart[p.id] || 0}" inputmode="numeric" data-qty="${p.id}"><button type="button" data-plus="${p.id}">＋</button></div></div></article>`).join("")}
@@ -466,7 +487,7 @@ html = r'''<!doctype html>
       }).join("")||`<div class="empty">尚無可退貨訂單。</div>`}</div></section>`;
     }
     function renderInventory(){
-      document.getElementById("inventory").innerHTML=PRODUCTS.map(p=>`<div class="inventory-row"><div><strong>${p.name}</strong><div class="meta">${productType(p)} · ${p.category} · 單價 ${money(p.price)}</div></div><div><span class="meta">庫存</span><strong>${state.stock[p.id]===null?"未控管":state.stock[p.id]}</strong></div><div><span class="meta">實銷</span><strong>${soldQty(p.id)}</strong></div><div><span class="meta">銷售額</span><strong>${money(soldQty(p.id)*p.price)}</strong></div><div class="stock-controls"><button data-stock-dec="${p.id}">−</button><input type="number" min="0" value="${state.stock[p.id]===null?0:state.stock[p.id]}" data-stock-input="${p.id}"><button data-stock-inc="${p.id}">＋</button></div></div>`).join("");
+      document.getElementById("inventory").innerHTML=[...PRODUCTS].sort(productSort).map(p=>`<div class="inventory-row"><div><strong>${p.name}</strong><div class="meta">${productGroupLabel(p)} · ${p.category} · 單價 ${money(p.price)}</div></div><div><span class="meta">庫存</span><strong>${state.stock[p.id]===null?"未控管":state.stock[p.id]}</strong></div><div><span class="meta">實銷</span><strong>${soldQty(p.id)}</strong></div><div><span class="meta">銷售額</span><strong>${money(soldQty(p.id)*p.price)}</strong></div><div class="stock-controls"><button data-stock-dec="${p.id}">−</button><input type="number" min="0" value="${state.stock[p.id]===null?0:state.stock[p.id]}" data-stock-input="${p.id}"><button data-stock-inc="${p.id}">＋</button></div></div>`).join("");
     }
     function renderDailySummary(){
       const byDate=new Map();
@@ -476,7 +497,7 @@ html = r'''<!doctype html>
         const bucket=byDate.get(key);
         order.items.forEach(item=>{
           const keyItem=item.custom?`custom:${item.name}:${item.price}`:item.id;
-          const existing=bucket.get(keyItem)||{name:itemName(item),type:item.custom?"客製化品項":productType(product(item.id)),price:itemPrice(item),qty:0,total:0};
+          const existing=bucket.get(keyItem)||{name:itemName(item),type:item.custom?"客製化品項":productGroupLabel(product(item.id)),price:itemPrice(item),qty:0,total:0};
           existing.qty+=item.qty;
           existing.total+=itemSubtotal(item);
           bucket.set(keyItem,existing);
