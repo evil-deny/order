@@ -1413,7 +1413,7 @@
     "name": "豆腱",
     "price": 550,
     "stock": null,
-    "image": "https://www.7-11-seafood.com.tw/img/product/%E7%B4%A0%E9%9B%9E/727A5AD7-43EE-4EBB-8002-EBBA64AF1DC3.jpeg"
+    "image": "assets/bean-tendon.png"
   },
   {
     "id": "p178",
@@ -1421,7 +1421,7 @@
     "name": "今都腐竹",
     "price": 30,
     "stock": null,
-    "image": "https://mall.iopenmall.tw/website/uploads_product/website_7120/P0712006692644_4_111740647.jpeg?hash=67330"
+    "image": "assets/jindu-yuba.png"
   },
   {
     "id": "p179",
