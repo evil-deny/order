@@ -145,6 +145,7 @@
     let standardCart = {};
     let customCart = [];
     let pendingOrder = null;
+    let inventoryKeyword = "";
 
     function loadState(){
       const saved = localStorage.getItem(STORE_KEY);
@@ -153,9 +154,11 @@
       next.stock = next.stock || Object.fromEntries(PRODUCTS.map(p => [p.id, p.stock === null ? null : p.stock]));
       next.categoryOverrides = next.categoryOverrides || {};
       next.categoryOptions = next.categoryOptions || [];
+      next.hiddenCategoryOptions = next.hiddenCategoryOptions || [];
       return next;
     }
     function saveState(){ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+    function attrText(v){ return String(v||"").replaceAll("&","&amp;").replaceAll('"',"&quot;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
     function money(v){ return "$" + Number(v || 0).toLocaleString("zh-TW"); }
     function nowText(){ return new Date().toLocaleString("zh-TW",{hour12:false,month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}); }
     function dateKey(date){ return date.toISOString().slice(0,10); }
@@ -191,7 +194,15 @@
     function statusText(s){ return {new:"待出貨",picking:"揀貨中",shipped:"已出貨",returned:"已退貨"}[s] || s; }
     function makeOrderId(name){ return `${name}-${new Date().toISOString().slice(2,10).replaceAll("-","")}-${String(state.orders.length+1).padStart(3,"0")}`; }
     function productType(product){
-      return state.categoryOverrides[product.id]?.type || defaultProductType(product);
+      return normalizeType(state.categoryOverrides[product.id]?.type || defaultProductType(product));
+    }
+    function normalizeType(type){
+      if(!(state.hiddenCategoryOptions||[]).includes(type)) return type;
+      return fallbackType(type);
+    }
+    function fallbackType(except){
+      const options=[...DEFAULT_TYPE_OPTIONS,...(state.categoryOptions||[])].filter(c=>c && c!==except && !(state.hiddenCategoryOptions||[]).includes(c));
+      return options.includes("其他訂購品") ? "其他訂購品" : (options[0] || "其他訂購品");
     }
     function defaultProductType(product){
       const name=product.name;
@@ -239,7 +250,15 @@
       return index<0 ? 99 : index;
     }
     function allTypeOptions(){
-      return [...new Set([...DEFAULT_TYPE_OPTIONS,...(state.categoryOptions||[]),...PRODUCTS.map(p=>productType(p))])].filter(Boolean).sort((a,b)=>typeRank(a)-typeRank(b)||a.localeCompare(b,"zh-Hant"));
+      const hidden=state.hiddenCategoryOptions||[];
+      return [...new Set([...DEFAULT_TYPE_OPTIONS,...(state.categoryOptions||[]),...PRODUCTS.map(p=>productType(p))])].filter(c=>c && !hidden.includes(c)).sort((a,b)=>typeRank(a)-typeRank(b)||a.localeCompare(b,"zh-Hant"));
+    }
+    function allCategoryManageOptions(){
+      const hidden=state.hiddenCategoryOptions||[];
+      return [...new Set([...DEFAULT_TYPE_OPTIONS,...(state.categoryOptions||[]),...PRODUCTS.map(p=>productType(p))])].filter(c=>c && !hidden.includes(c)).sort((a,b)=>typeRank(a)-typeRank(b)||a.localeCompare(b,"zh-Hant"));
+    }
+    function hiddenCategoryOptions(){
+      return [...new Set(state.hiddenCategoryOptions||[])].filter(Boolean).sort((a,b)=>typeRank(a)-typeRank(b)||a.localeCompare(b,"zh-Hant"));
     }
     function setMainView(id){
       document.querySelectorAll(".main-tab").forEach(b=>b.classList.toggle("active",b.dataset.mainView===id));
@@ -498,10 +517,18 @@
     }
     function renderInventory(){
       const typeOptions=allTypeOptions();
-      const customOptions=(state.categoryOptions||[]).filter(Boolean);
-      const manager=`<section class="category-manager"><strong>主畫面分類管理</strong><div class="category-tools"><input id="newCategoryOption" placeholder="新增細分類，例如：節慶商品"><button class="blue" id="addCategoryOption">新增分類</button></div>${customOptions.length?`<div class="category-tools"><select id="deleteCategoryOption">${customOptions.map(c=>`<option value="${c}">${c}</option>`).join("")}</select><button class="danger" id="deleteCategoryOptionBtn">刪除自訂分類</button></div>`:""}</section>`;
+      const manageableOptions=allCategoryManageOptions();
+      const hiddenOptions=hiddenCategoryOptions();
+      const manager=`<section class="category-manager"><strong>庫存搜尋</strong><input id="inventorySearch" placeholder="搜尋商品、分類、單價" value="${attrText(inventoryKeyword)}"><strong>主畫面分類管理</strong><div class="category-tools"><input id="newCategoryOption" placeholder="新增細分類，例如：節慶商品"><button class="blue" id="addCategoryOption">新增分類</button></div>${manageableOptions.length>1?`<div class="category-tools"><select id="deleteCategoryOption">${manageableOptions.map(c=>`<option value="${c}">${c}</option>`).join("")}</select><button class="danger" id="deleteCategoryOptionBtn">刪除分類</button></div>`:""}${hiddenOptions.length?`<div class="category-tools"><select id="restoreCategoryOption">${hiddenOptions.map(c=>`<option value="${c}">${c}</option>`).join("")}</select><button class="secondary" id="restoreCategoryOptionBtn">恢復分類</button></div>`:""}</section>`;
       const rows=[...PRODUCTS].sort(productSort).map(p=>`<div class="inventory-row"><div><strong>${p.name}</strong><div class="meta">${productGroupLabel(p)} · ${p.category} · 單價 ${money(p.price)}</div><div class="category-editor"><select data-storage-select="${p.id}">${STORAGE_OPTIONS.map(c=>`<option value="${c}" ${productStorage(p)===c?"selected":""}>${c}</option>`).join("")}</select><select data-type-select="${p.id}">${typeOptions.map(c=>`<option value="${c}" ${productType(p)===c?"selected":""}>${c}</option>`).join("")}</select><button data-reset-category="${p.id}">回復預設</button></div></div><div><span class="meta">庫存</span><strong>${state.stock[p.id]===null?"未控管":state.stock[p.id]}</strong></div><div><span class="meta">實銷</span><strong>${soldQty(p.id)}</strong></div><div><span class="meta">銷售額</span><strong>${money(soldQty(p.id)*p.price)}</strong></div><div class="stock-controls"><button data-stock-dec="${p.id}">−</button><input type="number" min="0" value="${state.stock[p.id]===null?0:state.stock[p.id]}" data-stock-input="${p.id}"><button data-stock-inc="${p.id}">＋</button></div></div>`).join("");
       document.getElementById("inventory").innerHTML=manager+rows;
+      applyInventorySearch();
+    }
+    function applyInventorySearch(){
+      const keyword=inventoryKeyword.trim().toLowerCase();
+      document.querySelectorAll("#inventory .inventory-row").forEach(row=>{
+        row.style.display = !keyword || row.textContent.toLowerCase().includes(keyword) ? "" : "none";
+      });
     }
     function renderDailySummary(){
       const byDate=new Map();
@@ -545,13 +572,15 @@
       const stockDec=e.target.closest("[data-stock-dec]"); if(stockDec){ if(state.stock[stockDec.dataset.stockDec]===null) state.stock[stockDec.dataset.stockDec]=0; state.stock[stockDec.dataset.stockDec]=Math.max(0,state.stock[stockDec.dataset.stockDec]-1); saveState(); renderAdmin(); renderProducts(); }
       const stockInc=e.target.closest("[data-stock-inc]"); if(stockInc){ if(state.stock[stockInc.dataset.stockInc]===null) state.stock[stockInc.dataset.stockInc]=0; state.stock[stockInc.dataset.stockInc]+=1; saveState(); renderAdmin(); renderProducts(); }
       const resetCategory=e.target.closest("[data-reset-category]"); if(resetCategory){ delete state.categoryOverrides[resetCategory.dataset.resetCategory]; saveState(); initFilters(); renderProducts(); renderAdmin(); }
-      if(e.target.id==="addCategoryOption"){ const input=document.getElementById("newCategoryOption"); const value=input.value.trim(); if(!value){ alert("請輸入分類名稱。"); return; } if(!state.categoryOptions.includes(value) && !DEFAULT_TYPE_OPTIONS.includes(value)) state.categoryOptions.push(value); input.value=""; saveState(); initFilters(); renderProducts(); renderAdmin(); }
-      if(e.target.id==="deleteCategoryOptionBtn"){ const select=document.getElementById("deleteCategoryOption"); const value=select?.value; if(!value) return; if(!confirm(`確定刪除自訂分類「${value}」？使用此分類的品項會回復預設分類。`)) return; state.categoryOptions=state.categoryOptions.filter(c=>c!==value); Object.entries(state.categoryOverrides).forEach(([id,setting])=>{ if(setting.type===value){ delete state.categoryOverrides[id]; } }); saveState(); initFilters(); renderProducts(); renderAdmin(); }
+      if(e.target.id==="addCategoryOption"){ const input=document.getElementById("newCategoryOption"); const value=input.value.trim(); if(!value){ alert("請輸入分類名稱。"); return; } state.hiddenCategoryOptions=(state.hiddenCategoryOptions||[]).filter(c=>c!==value); if(!state.categoryOptions.includes(value) && !DEFAULT_TYPE_OPTIONS.includes(value)) state.categoryOptions.push(value); input.value=""; saveState(); initFilters(); renderProducts(); renderAdmin(); }
+      if(e.target.id==="deleteCategoryOptionBtn"){ const select=document.getElementById("deleteCategoryOption"); const value=select?.value; if(!value) return; const nextType=fallbackType(value); if(!confirm(`確定刪除分類「${value}」？使用此分類的品項會改到「${nextType}」。`)) return; state.categoryOptions=state.categoryOptions.filter(c=>c!==value); state.hiddenCategoryOptions=[...new Set([...(state.hiddenCategoryOptions||[]),value])]; Object.entries(state.categoryOverrides).forEach(([id,setting])=>{ if(setting.type===value){ state.categoryOverrides[id]={...setting,type:nextType}; } }); PRODUCTS.forEach(p=>{ if(defaultProductType(p)===value && !state.categoryOverrides[p.id]) state.categoryOverrides[p.id]={storage:productStorage(p),type:nextType}; }); saveState(); initFilters(); renderProducts(); renderAdmin(); }
+      if(e.target.id==="restoreCategoryOptionBtn"){ const select=document.getElementById("restoreCategoryOption"); const value=select?.value; if(!value) return; state.hiddenCategoryOptions=(state.hiddenCategoryOptions||[]).filter(c=>c!==value); saveState(); initFilters(); renderProducts(); renderAdmin(); }
     });
 
     document.addEventListener("input", e=>{
       if(e.target.matches("[data-qty]")) setQty(e.target.dataset.qty,e.target.value);
       if(e.target.id==="search") renderProducts();
+      if(e.target.id==="inventorySearch"){ inventoryKeyword=e.target.value; applyInventorySearch(); }
       if(e.target.matches("[data-stock-input]")){ state.stock[e.target.dataset.stockInput]=Math.max(0,Number(e.target.value||0)); saveState(); renderAdmin(); renderProducts(); }
     });
     document.addEventListener("change", e=>{
