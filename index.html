@@ -107,18 +107,18 @@
       .inventory-form select,.inventory-form select+select{max-width:100%}
     }
     .items{grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:14px;padding:14px}
-    .item{grid-template-columns:76px minmax(0,1fr);gap:16px 12px;padding:16px;border-radius:14px;align-content:start}
-    .item img{grid-column:1;grid-row:1;width:76px;height:76px;border-radius:10px}
+    .item{grid-template-columns:90px minmax(0,1fr);gap:16px 12px;padding:16px;border-radius:14px;align-content:start}
+    .item-media{grid-column:1;grid-row:1;display:grid;gap:8px;align-content:start;justify-items:center}
+    .item .item-media img{grid-column:auto;grid-row:auto;width:90px;height:90px;border-radius:10px}
+    .item-media .stock{width:100%;padding:4px;font-size:18px;font-weight:800;text-align:center;white-space:nowrap;border-radius:8px}
     .item-heading{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start}
     .item .item-heading h3{grid-column:auto;grid-row:auto;min-width:0;margin:0;font-size:24px;line-height:1.45}
     .item-price{display:grid;justify-items:end;line-height:1.25;color:var(--red);font-weight:900;white-space:nowrap}
     .item-price span{font-size:18px;margin-bottom:5px}.item-price strong{font-size:26px}
     .item .qty{grid-column:1 / -1;grid-row:auto}
-    .item-footer{grid-column:1 / -1;display:flex;align-items:center;min-height:38px;border-top:1px solid var(--line);padding-top:12px}
-    .item-footer .stock{font-size:20px;font-weight:800;padding:4px 12px;border-radius:8px}
     @media(max-width:380px){
-      .items{padding:10px}.item{padding:12px;grid-template-columns:56px minmax(0,1fr);gap:14px 10px}
-      .item img{width:56px;height:56px}.item-heading{gap:8px}.item-price strong{font-size:24px}
+      .items{padding:10px}.item{padding:12px;grid-template-columns:76px minmax(0,1fr);gap:14px 10px}
+      .item .item-media img{width:76px;height:76px}.item-heading{gap:8px}.item-price strong{font-size:24px}
     }
   </style>
 </head>
@@ -340,7 +340,7 @@
       visibleProducts().forEach(p=>{ const label=productGroupLabel(p); if(!grouped.has(label)) grouped.set(label,[]); grouped.get(label).push(p); });
       document.getElementById("productList").innerHTML=[...grouped.entries()].map(([category,items])=>`
         <section class="category"><div class="category-title"><span>${category}</span><span class="category-count">${items.length} 項</span></div><div class="items">
-        ${items.map(p=>`<article class="item"><img src="${attrText(p.image||PLACEHOLDER)}" alt="${attrText(p.name)}" loading="lazy" data-image-open="${attrText(p.image||PLACEHOLDER)}" data-image-name="${attrText(p.name)}" onerror="this.src='${PLACEHOLDER}'"><div class="item-heading"><h3>${p.name}</h3><div class="item-price"><span>單價</span><strong>${money(p.price)}</strong></div></div><div class="qty"><button type="button" data-minus="${p.id}" aria-label="減少 ${attrText(p.name)} 數量">−</button><input id="qty-${p.id}" type="number" min="0" value="${standardCart[p.id] || 0}" inputmode="numeric" data-qty="${p.id}" aria-label="${attrText(p.name)} 數量"><button type="button" data-plus="${p.id}" aria-label="增加 ${attrText(p.name)} 數量">＋</button></div>${state.stock[p.id]===null?"":`<div class="item-footer"><span class="stock">庫存 ${state.stock[p.id]}</span></div>`}</article>`).join("")}
+        ${items.map(p=>`<article class="item"><div class="item-media"><img src="${attrText(p.image||PLACEHOLDER)}" alt="${attrText(p.name)}" loading="lazy" data-image-open="${attrText(p.image||PLACEHOLDER)}" data-image-name="${attrText(p.name)}" onerror="this.src='${PLACEHOLDER}'">${state.stock[p.id]===null?"":`<span class="stock">庫存 ${state.stock[p.id]}</span>`}</div><div class="item-heading"><h3>${p.name}</h3><div class="item-price"><span>單價</span><strong>${money(p.price)}</strong></div></div><div class="qty"><button type="button" data-minus="${p.id}" aria-label="減少 ${attrText(p.name)} 數量">−</button><input id="qty-${p.id}" type="number" min="0" value="${standardCart[p.id] || 0}" inputmode="numeric" data-qty="${p.id}" aria-label="${attrText(p.name)} 數量"><button type="button" data-plus="${p.id}" aria-label="增加 ${attrText(p.name)} 數量">＋</button></div></article>`).join("")}
         </div></section>`).join("") || `<div class="empty">找不到品項。</div>`;
       updateTotal();
     }
