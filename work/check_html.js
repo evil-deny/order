@@ -2,9 +2,9 @@ const fs = require("fs");
 
 const htmlPath = process.argv[2] || "outputs/index.html";
 const html = fs.readFileSync(htmlPath, "utf8");
-const script = html.match(/<script>([\s\S]*)<\/script>/)[1];
-new Function(script);
+const script = html.match(/<script type="module">([\s\S]*)<\/script>/)[1];
+const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+new AsyncFunction(script);
 
-const productCount = (html.match(/"id": "p/g) || []).length;
-console.log("JS syntax OK");
-console.log(`${productCount} products embedded`);
+if(!script.includes("FuyuanCloud.loadProducts('all')"))throw Error('Missing shared catalog connection');
+console.log("Module JS syntax OK; catalog loads from shared API");
