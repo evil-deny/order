@@ -6,5 +6,5 @@ const script = html.match(/<script type="module">([\s\S]*)<\/script>/)[1];
 const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
 new AsyncFunction(script);
 
-if(!script.includes("FuyuanCloud.loadProducts('all')"))throw Error('Missing shared catalog connection');
+if(!script.includes("FuyuanCloud.loadProducts('order')"))throw Error('Missing shared catalog connection');
 console.log("Module JS syntax OK; catalog loads from shared API");
