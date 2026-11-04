@@ -280,6 +280,7 @@
   <script src="./assets/cloud-sync.js"></script>
   <script type="module">
     import {orderLabel,sourceLabel,sourceClass} from "./assets/order-display.js";
+    import {catalogOrder} from "./assets/catalog-order.js";
     await FuyuanCloud.ready;
     document.addEventListener("keydown",e=>{if(e.target.matches("[data-image-open]")&&["Enter"," "].includes(e.key)){e.preventDefault();e.target.click();}});
     const PRODUCTS=await FuyuanCloud.loadProducts('order');
@@ -432,10 +433,7 @@
       return activeProducts().filter(p => p.name.toLowerCase().includes(keyword) && (cat==="全部品項" || productStorage(p)===cat || productGroupLabel(p)===cat)).sort(productSort);
     }
     function productSort(a,b){
-      return storageRank(productStorage(a))-storageRank(productStorage(b))
-        || typeRank(productType(a))-typeRank(productType(b))
-        || productType(a).localeCompare(productType(b),"zh-Hant")
-        || a.name.localeCompare(b.name,"zh-Hant");
+      return catalogOrder({...a,storage:productStorage(a),type:productType(a)},{...b,storage:productStorage(b),type:productType(b)});
     }
     function productNameMarkup(name){
       const specs=[];
