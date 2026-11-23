@@ -1,0 +1,19 @@
+{
+  "name": "福緣訂單系統",
+  "short_name": "福緣訂單",
+  "lang": "zh-Hant",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f8f5",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "./assets/partner-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
